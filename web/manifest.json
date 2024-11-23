@@ -1,7 +1,7 @@
 {
-    "name": "booi",
-    "short_name": "booi",
-    "start_url": "/bio/",
+    "name": "Ahmed's bio",
+    "short_name": "bio",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
