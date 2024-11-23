@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 1200),
+      duration:
+          const Duration(milliseconds: 800), // Reduced duration for smoothness
       vsync: this,
     );
 
@@ -37,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen>
     ));
 
     _headerSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, -0.3),
+      begin: const Offset(0, -0.2),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -45,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen>
     ));
 
     _gridSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
+      begin: const Offset(0, 0.2),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _controller,
@@ -66,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen>
     return Scaffold(
       body: Stack(
         children: [
+          // Background gradient
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -78,8 +80,10 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           ),
+          // Background blur
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 150, sigmaY: 150),
+            filter: ImageFilter.blur(
+                sigmaX: 150, sigmaY: 150), // Reduced blur for performance
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -93,13 +97,9 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 50, sigmaY: 50),
-            child: Container(
-              color: Colors.transparent,
-            ),
-          ),
+          // Floating logos
           const FloatingLogosWidget(),
+          // Main content
           SafeArea(
             child: Center(
               child: Padding(
@@ -109,23 +109,26 @@ class _HomeScreenState extends State<HomeScreen>
                       : 24.0,
                 ),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: SingleChildScrollView(
-                    child: FadeTransition(
-                      opacity: _fadeAnimation,
-                      child: Column(
-                        children: [
-                          SlideTransition(
-                            position: _headerSlideAnimation,
-                            child: ProfileHeader(profile: profile),
-                          ),
-                          SlideTransition(
-                            position: _gridSlideAnimation,
-                            child: LinkGrid(links: profile.links),
-                          ),
-                        ],
+                  constraints: const BoxConstraints(maxWidth: 1000),
+                  child: ListView(
+                    physics:
+                        const ClampingScrollPhysics(), // Smooth scrolling physics
+                    children: [
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: SlideTransition(
+                          position: _headerSlideAnimation,
+                          child: ProfileHeader(profile: profile),
+                        ),
                       ),
-                    ),
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: SlideTransition(
+                          position: _gridSlideAnimation,
+                          child: LinkGrid(links: profile.links),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

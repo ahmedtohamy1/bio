@@ -13,7 +13,7 @@ class LinkGrid extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          return constraints.maxWidth > 600
+          return constraints.maxWidth > 820
               ? GridView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
