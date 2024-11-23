@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
           // Background blur
           BackdropFilter(
             filter: ImageFilter.blur(
-                sigmaX: 150, sigmaY: 150), // Reduced blur for performance
+                sigmaX: 100, sigmaY: 100), // Reduced blur for performance
             child: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(

@@ -9,37 +9,41 @@ class LinkGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          return constraints.maxWidth > 820
-              ? GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 12,
-                    mainAxisSpacing: 12,
-                    childAspectRatio: 2.8,
-                    mainAxisExtent: 120,
-                  ),
-                  itemCount: links.length,
-                  itemBuilder: (context, index) {
-                    return LinkCard(link: links[index]);
-                  },
-                )
-              : ListView.separated(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: links.length,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 12),
-                  itemBuilder: (context, index) {
-                    return LinkCard(link: links[index]);
-                  },
-                );
-        },
+    return FadeTransition(
+      opacity: const AlwaysStoppedAnimation(1.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return constraints.maxWidth > 820
+                ? GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                      childAspectRatio: 2.8,
+                      mainAxisExtent: 120,
+                    ),
+                    itemCount: links.length,
+                    itemBuilder: (context, index) {
+                      return LinkCard(link: links[index]);
+                    },
+                  )
+                : ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: links.length,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      return LinkCard(link: links[index]);
+                    },
+                  );
+          },
+        ),
       ),
     );
   }

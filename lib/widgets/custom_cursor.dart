@@ -20,7 +20,7 @@ class CustomCursorState extends State<CustomCursor>
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 

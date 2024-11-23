@@ -29,7 +29,7 @@ class _LinkCardState extends State<LinkCard>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
 

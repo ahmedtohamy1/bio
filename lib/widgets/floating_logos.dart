@@ -14,7 +14,7 @@ class FloatingLogosWidget extends StatefulWidget {
 class _FloatingLogosWidgetState extends State<FloatingLogosWidget>
     with SingleTickerProviderStateMixin {
   static const int _logoCount = 25;
-  static const Duration _animationDuration = Duration(seconds: 12);
+  static const Duration _animationDuration = Duration(seconds: 20);
 
   late final AnimationController _controller;
   final List<FloatingLogo> _logos = List.generate(

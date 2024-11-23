@@ -22,7 +22,7 @@ class _SnowflakeWidgetState extends State<SnowflakeWidget>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 10),
+      duration: const Duration(seconds: 20),
     )..repeat();
   }
 
