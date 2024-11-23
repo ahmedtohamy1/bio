@@ -19,9 +19,10 @@ class LinkGrid extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16,
-                    childAspectRatio: 2.5,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 2.8,
+                    mainAxisExtent: 120,
                   ),
                   itemCount: links.length,
                   itemBuilder: (context, index) {
@@ -33,7 +34,7 @@ class LinkGrid extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: links.length,
                   separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 12),
                   itemBuilder: (context, index) {
                     return LinkCard(link: links[index]);
                   },

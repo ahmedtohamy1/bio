@@ -1,19 +1,75 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:link_in_bio/models/profile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class LinkCard extends StatelessWidget {
+class LinkCard extends StatefulWidget {
   final Link link;
 
   const LinkCard({super.key, required this.link});
+
+  @override
+  State<LinkCard> createState() => _LinkCardState();
+}
+
+class _LinkCardState extends State<LinkCard>
+    with SingleTickerProviderStateMixin {
+  bool isHovered = false;
+  late final AnimationController _controller;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<double> _opacityAnimation;
+  late final Animation<double> _iconScaleAnimation;
+
+  // Remove lime accent color and use blue again
+  static const accentColor = Colors.blue;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.02,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutQuint,
+    ));
+
+    _iconScaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 1.15,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutQuint,
+    ));
+
+    _opacityAnimation = Tween<double>(
+      begin: 0.08,
+      end: 0.15,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeOutQuint,
+    ));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   IconData _getIcon(String icon) {
     switch (icon) {
       case 'github':
         return FontAwesomeIcons.github;
       case 'linkedin':
-        return FontAwesomeIcons.linkedin;
+        return FontAwesomeIcons.linkedinIn;
       case 'calendar':
         return FontAwesomeIcons.calendar;
       default:
@@ -22,7 +78,7 @@ class LinkCard extends StatelessWidget {
   }
 
   void _launchURL() async {
-    final Uri url = Uri.parse(link.href);
+    final Uri url = Uri.parse(widget.link.href);
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     }
@@ -30,96 +86,136 @@ class LinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white.withOpacity(0.02),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: link.featured
-              ? Colors.blue.withOpacity(0.2)
-              : Colors.white.withOpacity(0.08),
-        ),
-      ),
-      child: InkWell(
-        onTap: _launchURL,
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.02),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.08),
+    return MouseRegion(
+      onEnter: (_) {
+        setState(() => isHovered = true);
+        _controller.forward();
+      },
+      onExit: (_) {
+        setState(() => isHovered = false);
+        _controller.reverse();
+      },
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform.scale(
+            scale: _scaleAnimation.value,
+            child: Card(
+              color: Colors.white.withOpacity(0.02),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(
+                  color: widget.link.featured
+                      ? Colors.blue.withOpacity(_opacityAnimation.value + 0.1)
+                      : Colors.white.withOpacity(_opacityAnimation.value + 0.1),
+                ),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  child: InkWell(
+                    onTap: _launchURL,
+                    borderRadius: BorderRadius.circular(12),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Transform.scale(
+                            scale: _iconScaleAnimation.value,
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                color: Colors.white
+                                    .withOpacity(isHovered ? 0.05 : 0.02),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: widget.link.featured
+                                      ? Colors.blue
+                                          .withOpacity(isHovered ? 0.3 : 0.2)
+                                      : Colors.white
+                                          .withOpacity(isHovered ? 0.25 : 0.15),
+                                ),
+                              ),
+                              child: Icon(
+                                _getIcon(widget.link.icon),
+                                color: widget.link.featured
+                                    ? Colors.blue
+                                        .withOpacity(isHovered ? 1 : 0.8)
+                                    : Colors.white
+                                        .withOpacity(isHovered ? 1 : 0.8),
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  widget.link.text,
+                                  style: TextStyle(
+                                    color: Colors.white
+                                        .withOpacity(isHovered ? 1 : 0.9),
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  widget.link.subtext,
+                                  style: TextStyle(
+                                    color: Colors.white
+                                        .withOpacity(isHovered ? 0.7 : 0.5),
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                if (widget.link.skills != null) ...[
+                                  const SizedBox(height: 8),
+                                  Wrap(
+                                    spacing: 4,
+                                    runSpacing: 4,
+                                    children: widget.link.skills!.map((skill) {
+                                      final color = widget.link.featured
+                                          ? Colors.blue
+                                          : Colors.white;
+                                      return Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: color.withOpacity(0.08),
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          border: Border.all(
+                                            color: color.withOpacity(
+                                                isHovered ? 0.2 : 0.15),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          skill,
+                                          style: TextStyle(
+                                            color: color.withOpacity(
+                                                isHovered ? 0.9 : 0.7),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-                child: Icon(
-                  _getIcon(link.icon),
-                  color: Colors.white,
-                  size: 24,
-                ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      link.text,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Text(
-                      link.subtext,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontSize: 14,
-                      ),
-                    ),
-                    if (link.skills != null) ...[
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 4,
-                        runSpacing: 4,
-                        children: link.skills!.map((skill) {
-                          return Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.white.withOpacity(0.05),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Colors.white.withOpacity(0.1),
-                              ),
-                            ),
-                            child: Text(
-                              skill,
-                              style: TextStyle(
-                                color: Colors.white.withOpacity(0.7),
-                                fontSize: 12,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              Icon(
-                Icons.arrow_outward,
-                color: Colors.white.withOpacity(0.5),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
