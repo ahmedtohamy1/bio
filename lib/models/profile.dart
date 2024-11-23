@@ -5,6 +5,7 @@ class Profile {
   final Website website;
   final String avatarUrl;
   final List<Link> links;
+  final Socials socials;
 
   Profile({
     required this.name,
@@ -13,6 +14,7 @@ class Profile {
     required this.website,
     required this.avatarUrl,
     required this.links,
+    required this.socials,
   });
 }
 
@@ -40,5 +42,21 @@ class Link {
     required this.category,
     this.featured = false,
     this.skills,
+  });
+}
+
+class Socials {
+  final String whatsapp;
+  final String facebook;
+  final String instagram;
+  final String github;
+  final String telegram;
+
+  Socials({
+    required this.whatsapp,
+    required this.facebook,
+    required this.instagram,
+    required this.github,
+    required this.telegram,
   });
 }

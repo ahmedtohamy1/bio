@@ -1,11 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:link_in_bio/models/profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ProfileHeader extends StatelessWidget {
   final Profile profile;
 
   const ProfileHeader({super.key, required this.profile});
+
+  void _launchURL(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    }
+  }
+
+  Widget _buildSocialIcon({
+    required IconData icon,
+    required String url,
+    required String label,
+  }) {
+    return Tooltip(
+      message: label,
+      child: IconButton(
+        onPressed: () => _launchURL(url),
+        icon: Icon(
+          icon,
+          color: Colors.white.withOpacity(0.7),
+          size: 20,
+        ),
+        hoverColor: Colors.white.withOpacity(0.1),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,38 +65,91 @@ class ProfileHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.location_on_outlined,
-                    size: 16,
-                    color: Colors.white.withOpacity(0.5),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => _launchURL(
+                      'https://maps.google.com/?q=${profile.location}'),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        size: 16,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        profile.location,
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.5),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white.withOpacity(0.3),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    profile.location,
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                    ),
-                  ),
-                ],
+                ),
               ),
               const SizedBox(width: 16),
-              Row(
-                children: [
-                  Icon(
-                    Icons.language,
-                    size: 16,
-                    color: Colors.white.withOpacity(0.5),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () => _launchURL(profile.website.href),
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.language,
+                        size: 16,
+                        color: Colors.white.withOpacity(0.5),
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        profile.website.text,
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.5),
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.white.withOpacity(0.3),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 4),
-                  Text(
-                    profile.website.text,
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.whatsapp,
+                url: profile.socials.whatsapp,
+                label: 'WhatsApp',
+              ),
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.facebook,
+                url: profile.socials.facebook,
+                label: 'Facebook',
+              ),
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.instagram,
+                url: profile.socials.instagram,
+                label: 'Instagram',
+              ),
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.github,
+                url: profile.socials.github,
+                label: 'GitHub',
+              ),
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.globe,
+                url: profile.website.href,
+                label: 'Website',
+              ),
+              _buildSocialIcon(
+                icon: FontAwesomeIcons.telegram,
+                url: profile.socials.telegram,
+                label: 'Telegram',
               ),
             ],
           ),
