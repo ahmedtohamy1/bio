@@ -4,18 +4,18 @@
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A stylish and customizable Link in Bio page.">
+  <meta name="description" content="A stylish and customizable Bio page.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Link in Bio">
+  <meta name="apple-mobile-web-app-title" content="Ahmed's Bio">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
 
-  <title>Link in Bio</title>
+  <title>Ahmed's Bio</title>
   <link rel="manifest" href="manifest.json">
 
   <!-- Preload critical assets -->
@@ -25,7 +25,7 @@
   <!-- Initialize the viewport -->
   <script defer>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
+    var serviceWorkerVersion = '{{flutter_service_worker_version}}';;
   </script>
 
   <!-- Flutter initialization -->
@@ -63,7 +63,7 @@
     window.addEventListener('load', function() {
       var loading = document.querySelector('#loading');
       
-      _flutter.loader.loadEntrypoint({
+      _flutter.loader.load({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },

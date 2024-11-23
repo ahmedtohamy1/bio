@@ -127,6 +127,11 @@ class ProfileHeader extends StatelessWidget {
                 label: 'WhatsApp',
               ),
               _buildSocialIcon(
+                icon: FontAwesomeIcons.linkedin,
+                url: profile.socials.linkedin,
+                label: 'Linkedin',
+              ),
+              _buildSocialIcon(
                 icon: FontAwesomeIcons.facebook,
                 url: profile.socials.facebook,
                 label: 'Facebook',
@@ -140,11 +145,6 @@ class ProfileHeader extends StatelessWidget {
                 icon: FontAwesomeIcons.github,
                 url: profile.socials.github,
                 label: 'GitHub',
-              ),
-              _buildSocialIcon(
-                icon: FontAwesomeIcons.globe,
-                url: profile.website.href,
-                label: 'Website',
               ),
               _buildSocialIcon(
                 icon: FontAwesomeIcons.telegram,

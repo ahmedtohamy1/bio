@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Link in Bio',
+      title: "Ahmed's Bio",
       theme: ThemeData(
         fontFamily: 'Geist',
         textTheme: const TextTheme(

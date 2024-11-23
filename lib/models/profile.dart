@@ -51,8 +51,10 @@ class Socials {
   final String instagram;
   final String github;
   final String telegram;
+  final String linkedin;
 
   Socials({
+    required this.linkedin,
     required this.whatsapp,
     required this.facebook,
     required this.instagram,

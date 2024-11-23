@@ -44,5 +44,6 @@ final profile = Profile(
     instagram: 'https://instagram.com/ahmed.tuhamy',
     github: 'https://github.com/ahmedtohamy1',
     telegram: 'https://t.me/ahmed_tohamy',
+    linkedin: 'https://linkedin/in/ahmedtohamy',
   ),
 );
