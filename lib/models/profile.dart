@@ -6,10 +6,12 @@ class Profile {
   final String avatarUrl;
   final List<Link> links;
   final Socials socials;
+  final String skills;
 
   Profile({
     required this.name,
     required this.title,
+    required this.skills,
     required this.location,
     required this.website,
     required this.avatarUrl,
@@ -51,8 +53,10 @@ class Socials {
   final String instagram;
   final String github;
   final String telegram;
+  final String linkedin;
 
   Socials({
+    required this.linkedin,
     required this.whatsapp,
     required this.facebook,
     required this.instagram,

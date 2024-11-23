@@ -24,7 +24,6 @@ class _LinkCardState extends State<LinkCard>
   late final Animation<double> _iconScaleAnimation;
 
   // Remove lime accent color and use blue again
-  static const accentColor = Colors.blue;
 
   @override
   void initState() {

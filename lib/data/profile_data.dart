@@ -2,7 +2,8 @@ import 'package:link_in_bio/models/profile.dart';
 
 final profile = Profile(
   name: 'Ahmed Tohamy (Agmad)',
-  title: 'Mobile/Flutter Developer',
+  title: 'Software Engineer',
+  skills: 'Mobile App Delveloper',
   location: 'Cairo, Egypt',
   website: Website(
     text: 'https://ahmedtohamy.is-a.dev',
@@ -27,7 +28,7 @@ final profile = Profile(
       category: 'Work',
       skills: [
         'Software Development',
-        'Automation',
+        'Mobile Development',
       ],
     ),
     Link(
@@ -44,5 +45,6 @@ final profile = Profile(
     instagram: 'https://instagram.com/ahmed.tuhamy',
     github: 'https://github.com/ahmedtohamy1',
     telegram: 'https://t.me/ahmed_tohamy',
+    linkedin: 'https://linkedin/in/ahmedtohamy',
   ),
 );

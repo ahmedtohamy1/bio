@@ -61,6 +61,14 @@ class ProfileHeader extends StatelessWidget {
               color: Colors.white.withOpacity(0.6),
             ),
           ),
+          const SizedBox(height: 3),
+          Text(
+            profile.skills,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white.withOpacity(0.4),
+            ),
+          ),
           const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -127,6 +135,11 @@ class ProfileHeader extends StatelessWidget {
                 label: 'WhatsApp',
               ),
               _buildSocialIcon(
+                icon: FontAwesomeIcons.linkedin,
+                url: profile.socials.linkedin,
+                label: 'Linkedin',
+              ),
+              _buildSocialIcon(
                 icon: FontAwesomeIcons.facebook,
                 url: profile.socials.facebook,
                 label: 'Facebook',
@@ -140,11 +153,6 @@ class ProfileHeader extends StatelessWidget {
                 icon: FontAwesomeIcons.github,
                 url: profile.socials.github,
                 label: 'GitHub',
-              ),
-              _buildSocialIcon(
-                icon: FontAwesomeIcons.globe,
-                url: profile.website.href,
-                label: 'Website',
               ),
               _buildSocialIcon(
                 icon: FontAwesomeIcons.telegram,
