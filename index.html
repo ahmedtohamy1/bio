@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A stylish and customizable Bio page.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Ahmed's Bio">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Ahmed's Bio</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Preload critical assets -->
+  <link rel="preload" href="main.dart.js" as="script">
+  <link rel="preload" href="flutter.js" as="script">
+  
+  <!-- Initialize the viewport -->
+  <script defer>
+    // The value below is injected by flutter build, do not touch.
+    var serviceWorkerVersion = '"3944052784"';;
+  </script>
+
+  <!-- Flutter initialization -->
+  <script src="flutter.js" defer></script>
+</head>
+<body>
+  <div id="loading">
+    <!-- Optional: Add a loading indicator -->
+    <style>
+      #loading {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #050607;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .loader {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(255,255,255,.1);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+    <div class="loader"></div>
+  </div>
+
+  <script defer>
+    window.addEventListener('load', function() {
+      var loading = document.querySelector('#loading');
+      
+      _flutter.loader.load({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: async function(engineInitializer) {
+          // Initialize engine in parallel with DOM parsing
+          let appRunner = await engineInitializer.initializeEngine({
+            useColorEmoji: true,
+            renderer: "html"
+          });
+          
+          // Remove loading indicator and run app
+          loading.remove();
+          appRunner.runApp();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
