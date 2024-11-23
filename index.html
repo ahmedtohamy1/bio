@@ -4,7 +4,7 @@
   <base href="/">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A stylish and customizable Bio page.">
+  <meta name="description" content="A stylish and customizable Link in Bio page.">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,10 +22,44 @@
   <link rel="preload" href="main.dart.js" as="script">
   <link rel="preload" href="flutter.js" as="script">
   
-  <!-- Initialize the viewport -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevent scrolling during the loading screen */
+      height: 100%;
+      width: 100%;
+    }
+
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #050607;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loader {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+
   <script defer>
     // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = '"3944052784"';;
+    const serviceWorkerVersion = "3982991781";
   </script>
 
   <!-- Flutter initialization -->
@@ -33,29 +67,6 @@
 </head>
 <body>
   <div id="loading">
-    <!-- Optional: Add a loading indicator -->
-    <style>
-      #loading {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: #050607;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .loader {
-        width: 40px;
-        height: 40px;
-        border: 3px solid rgba(255,255,255,.1);
-        border-radius: 50%;
-        border-top-color: #fff;
-        animation: spin 1s ease-in-out infinite;
-      }
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
-    </style>
     <div class="loader"></div>
   </div>
 
@@ -63,7 +74,7 @@
     window.addEventListener('load', function() {
       var loading = document.querySelector('#loading');
       
-      _flutter.loader.load({
+      _flutter.loader.loadEntrypoint({
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
