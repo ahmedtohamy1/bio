@@ -18,13 +18,13 @@ final profile = Profile(
       href: 'https://github.com/ahmedtohamy1',
       category: 'Projects',
       featured: true,
-      skills: ['Flutter', 'Kotlin', 'Dart Frog', 'Python'],
+      skills: ['Flutter', 'Kotlin', 'Dart Frog', 'Typescript', 'Python'],
     ),
     Link(
       icon: 'linkedin',
       text: 'Professional Network',
       subtext: 'Connect with me on LinkedIn',
-      href: 'https://th.linkedin.com/in/ahmedtohamy',
+      href: 'https://linkedin.com/in/1ahmedtohamy',
       category: 'Work',
       skills: [
         'Software Development',
@@ -45,6 +45,6 @@ final profile = Profile(
     instagram: 'https://instagram.com/ahmed.tuhamy',
     github: 'https://github.com/ahmedtohamy1',
     telegram: 'https://t.me/ahmed_tohamy',
-    linkedin: 'https://www.linkedin.com/in/ahmedtohamy/',
+    linkedin: 'https://www.linkedin.com/in/1ahmedtohamy/',
   ),
 );
